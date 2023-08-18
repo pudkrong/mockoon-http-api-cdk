@@ -7,6 +7,7 @@ import { STS } from '@aws-sdk/client-sts'
 
 export type PackMockApiLambdas = {
 	mockoon: PackedLambda
+	reloadLambda: PackedLambda
 }
 
 const sts = new STS({})
@@ -20,6 +21,10 @@ const accountEnv = await env({ sts })
 new MockHttpApiApp({
 	lambdaSources: {
 		mockoon: await packLambdaFromPath('mockoon', 'lambdas/mockoon.ts'),
+		reloadLambda: await packLambdaFromPath(
+			'reloadLambda',
+			'lambdas/reloadLambda.ts',
+		),
 	},
 	layer: await packLayer({
 		id: 'baseLayer',
